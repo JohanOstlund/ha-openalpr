@@ -12,7 +12,7 @@ import datetime
 from envs import env
 
 HA_ENDPOINT = env('HA_APIENDPOINT') #'http://192.168.1.68:8123/api/services/script/turn_on'
-HA_APIPASS = env('HA_APIPASSWORD')
+HA_APIPASS = env('HA_TOKEN')
 PLATES = ['']
 RTSP_SOURCE  = env('STREAM_SOURCE') #'rtsp://192.168.0.60/mpeg4'
 WINDOW_NAME  = 'openalpr'
@@ -71,7 +71,7 @@ def main():
                     #Open the gate
                     response = requests.post(
                         HA_ENDPOINT,
-                        headers={'Content-Type': 'application/json', 'x-ha-access': '' + HA_APIPASS + '' },
+                        headers={'Content-Type': 'application/json', 'Authorization': '"Bearer ' + HA_TOKEN + " },
                         data='{"entity_id": "script.ANPR"}',
                     )
                     STAMP = STAMP = datetime.datetime.now() + datetime.timedelta(minutes=3)
